@@ -1,0 +1,38 @@
+create table CLIENT(
+Client_id Number(5) Primary Key,
+Client_name Varchar2(20) NOT NULL Unique,
+Client_address Varchar2(30),
+Client_city Varchar2(10) NOT NULL,
+Client_prov Char(2) NOT NULL,
+Client_postal Char(6) Not NULL)
+/
+create table PROG(
+Prog_id Number(5) Primary Key,
+Prog_name Varchar2(30) NOT NULL,
+Prof_office Char(4) NOT NULL,
+PRog_phone Char(10)
+)
+/
+create table PROJECT(
+Project_id Number(6) Primary Key,
+Proj_name Varchar2(40) NOT NULL UNIQUE,
+Complet_date Date,
+Total_cost Number(8,2)
+	CHECK (Total_cost > 0),
+Client_id Number(5) NOT NULL
+	References CLIENT(Client_id)
+)
+/
+create table PROJECT_STAFF(
+Prog_id Number(5),
+Project_id Number(6),
+Week_Year Char(5),
+Hours_worked Number(4,1) NOT NULL
+	Check (Hours_worked > 0),
+Constraint project_staff_pk PRIMARY KEY(Prog_id, Project_id, Week_Year),
+Constraint project_staff_uk UNIQUE(Week_Year),
+Constraint project_staff_prog_id_fk foreign key(Prog_id) References PROG,
+Constraint project_staff_project_id_fk foreign key(Project_id) References PROJECT
+)
+/
+
